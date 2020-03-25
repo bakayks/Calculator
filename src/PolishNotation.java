@@ -1,3 +1,4 @@
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class PolishNotation {
@@ -39,7 +40,6 @@ public class PolishNotation {
                 break;
             postfix += stack.pop();
         }
-        System.out.println(postfix);
         return postfix;
     }
 
@@ -72,20 +72,26 @@ public class PolishNotation {
                 }
                 doubleStack.push(Double.valueOf(doub));
             }else if(postFixChar != ' '){
-                double a = doubleStack.pop();
-                double b = doubleStack.pop();
-
-                if(postFixChar == '+')
-                    doubleStack.push(a+b);
-                else if(postFixChar == '-')
-                    doubleStack.push(b-a);
-                else if(postFixChar == '*')
-                    doubleStack.push(a*b);
-                else if(postFixChar == '/')
-                    doubleStack.push(b/a);
+                try{
+                    double a = doubleStack.pop();
+                    double b = doubleStack.pop();
+                    if(postFixChar == '+')
+                        doubleStack.push(a+b);
+                    else if(postFixChar == '-')
+                        doubleStack.push(b-a);
+                    else if(postFixChar == '*')
+                        doubleStack.push(a*b);
+                    else if(postFixChar == '/')
+                        doubleStack.push(b/a);
+                }catch (EmptyStackException emptyStackException){
+                    System.out.println("Стек пуст!");
+                }
             }
 
         }
-        return doubleStack.pop();
+        if(!doubleStack.isEmpty())
+            return doubleStack.pop();
+        else
+            return 0;
     }
 }

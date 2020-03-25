@@ -7,25 +7,35 @@ import javax.swing.JTextField;
 public class Viewer {
 
     private JTextField textField;
+    private JTextField answer;
     private Controller controller;
 
     public Viewer() {
         Model model = new Model(this);
         controller = new Controller(model);
         textField = new JTextField();
+        textField.setBorder(null);
         textField.setFont(new java.awt.Font("Alergia", java.awt.Font.BOLD, 25));
         textField.setForeground(java.awt.Color.magenta);
         textField.setHorizontalAlignment(JTextField.RIGHT);
-        textField.setBounds(50, 50, 230, 50);
+        textField.setBounds(50, 10, 230, 47);
+
+        answer = new JTextField();
+        answer.setFont(new java.awt.Font("Alergia", java.awt.Font.BOLD, 20));
+        answer.setBorder(null);
+        answer.setForeground(java.awt.Color.magenta);
+        answer.setHorizontalAlignment(JTextField.RIGHT);
+        answer.setBounds(50, 55, 230, 35);
 
         JPanel panel = getCenterJPanel();
-        panel.setBounds(0, 0, 350, 350);
+        panel.setBounds(0, 0, 350, 400);
 
         JFrame frame = new JFrame("Calculator MVC");
         frame.setSize(400, 420);
         frame.setLocation(100, 50);
         frame.setLayout(null);
         frame.add(textField);
+        frame.add(answer);
         frame.add(panel);
         frame.setVisible(true);
     }
@@ -171,5 +181,10 @@ public class Viewer {
     public String getValue() {
         return textField.getText();
     }
+
+    public void updateAnswer(String value) {
+        answer.setText(value);
+    }
+
 }
 
