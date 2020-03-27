@@ -121,18 +121,18 @@ public class Viewer {
         buttonThree.setActionCommand("Three");
 
         JButton buttonZero = new JButton("0");
-        buttonZero.setBounds(50, 290, 110, 50);
+        buttonZero.setBounds(50, 290, 50, 50);
         buttonZero.setForeground(java.awt.Color.magenta);
         buttonZero.addActionListener(controller);
         buttonZero.setActionCommand("Zero");
 
         JButton buttonComma = new JButton(",");
-        buttonComma.setBounds(170, 290, 50, 50);
+        buttonComma.setBounds(110, 290, 50, 50);
         buttonComma.addActionListener(controller);
         buttonComma.setActionCommand("Comma");
 
         JButton buttonPlus = new JButton("+");
-        buttonPlus.setBounds(230, 290, 50, 50);
+        buttonPlus.setBounds(170, 290, 50, 50);
         buttonPlus.addActionListener(controller);
         buttonPlus.setActionCommand("Plus");
 
@@ -142,9 +142,19 @@ public class Viewer {
         buttonMinus.setActionCommand("Minus");
 
         JButton buttonEqually = new JButton("=");
-        buttonEqually.setBounds(290, 230, 50, 110);
+        buttonEqually.setBounds(290, 230, 50, 50);
         buttonEqually.addActionListener(controller);
         buttonEqually.setActionCommand("Equal");
+
+        JButton buttonLeftBracket = new JButton("(");
+        buttonLeftBracket.setBounds(230, 290, 50, 50);
+        buttonLeftBracket.addActionListener(controller);
+        buttonLeftBracket.setActionCommand("BracketLeft");
+
+        JButton buttonRightBracket = new JButton(")");
+        buttonRightBracket.setBounds(290, 290, 50, 50);
+        buttonRightBracket.addActionListener(controller);
+        buttonRightBracket.setActionCommand("BracketRight");
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -154,6 +164,9 @@ public class Viewer {
         panel.add(buttonEight);
         panel.add(buttonNine);
         panel.add(buttonDivide);
+
+        panel.add(buttonLeftBracket);
+        panel.add(buttonRightBracket);
 
         panel.add(buttonFour);
         panel.add(buttonFive);

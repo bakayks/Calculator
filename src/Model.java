@@ -2,14 +2,12 @@ public class Model {
 
     private Viewer viewer;
     private String temp;
-    private String answer;
     private PolishNotation polishNotation;
 
     public Model(Viewer viewer){
         this.viewer = viewer;
         polishNotation = new PolishNotation();
         temp = "";
-        answer = "";
     }
 
     public void doAction(String command){
@@ -80,7 +78,6 @@ public class Model {
                 break;
             case "Delete":
                 deleteLastTempSymbol();
-                calculate(true);
                 break;
             case "Clear":
                 clearTemp();
@@ -88,36 +85,69 @@ public class Model {
             case "Equal":
                 calculate(false);
                 break;
+            case "BracketLeft":
+                setTemp("(");
+                calculate(true);
+                break;
+            case "BracketRight":
+                setTemp(")");
+                calculate(true);
+                break;
         }
     }
 
     private void setTemp(String tmp){
-        int tempLength = temp.length();
-        boolean tmpIsOperator = false;
-        if(tmp.equals("/") | tmp.equals("*") | tmp.equals("+") | tmp.equals("-") | tmp.equals("%")){
-            tmpIsOperator = true;
-        }
-        if(tempLength == 0 & !tmpIsOperator) {
-            temp = temp + tmp;
-            viewer.update(temp);
+        char value = tmp.charAt(0);
+        if(temp.length() == 0) {
+            if(value == '-' || value == '(' || Character.isDigit(value)){
+                temp += value;
+                viewer.update(temp);
+            }
             return;
-        }
-        char lastSymbol = temp.charAt(tempLength - 1);
-        if((lastSymbol == '/' | lastSymbol == '*' | lastSymbol == '+' | lastSymbol == '-' | lastSymbol == '%') & tmpIsOperator){
-            temp = temp.substring(0, tempLength-1) + tmp;
-            viewer.update(temp);
-        }else {
-            temp = temp + tmp;
-            viewer.update(temp);
+        }else{
+            if(Character.isDigit(value)){
+                temp += value;
+                viewer.update(temp);
+            }else if((value == '/' || value == '*' || value == '+' || value == '-' || value == '(' || value == ')')) {
+                if (Character.isDigit(temp.charAt(temp.length() - 1))) {
+                    if(value == '('){
+                        return;
+                    }
+                    temp += value;
+                    viewer.update(temp);
+                }else if (value == '(') {
+                    switch (temp.charAt(temp.length() - 1)){
+                        case '+':
+                        case '/':
+                        case '*':
+                        case '-':
+                            temp += value;
+                            viewer.update(temp);
+                    }
+                }else if(value == ')' && Character.isDigit(temp.charAt(temp.length() - 1))){
+                    temp += value;
+                    viewer.update(temp);
+                }else if (temp.charAt(temp.length() - 1) == '(' & value == '-') {
+                    temp += value;
+                    viewer.update(temp);
+                }else if (temp.charAt(temp.length() - 1) == ')' & (value == '-' || value == '+' || value == '/' || value == '*')) {
+                    temp += value;
+                    viewer.update(temp);
+                }
+            }
         }
     }
 
     private void deleteLastTempSymbol(){
-        if(temp.length()>0) {
+        if(temp.length()>1) {
             temp = temp.substring(0, temp.length() - 1);
+            calculate(true);
             System.out.println("Удаление последнего символа");
-        }else
+        }else {
+            temp = "";
+            viewer.updateAnswer(temp);
             System.out.println("Нету символов");
+        }
         viewer.update(temp);
     }
 
@@ -127,28 +157,37 @@ public class Model {
         viewer.updateAnswer(temp);
     }
 
+
     private void calculate(boolean isAnswer){
-        String postFix = polishNotation.infixToPostfix(viewer.getValue());
-        double otvet = polishNotation.calculate(postFix);
-        int doubleToInt = (int) otvet;
-        if(otvet != 0){
-            if(otvet>doubleToInt) {
+        String postFix = polishNotation.infixToPostfix(temp);
+        if(polishNotation.calculate(postFix) != null){
+            double otvet = (double) polishNotation.calculate(postFix);
+            int doubleToInt = (int) otvet;
+            boolean checkDouble = isDouble(doubleToInt, otvet);
+            if(checkDouble) {
                 if(isAnswer) {
-                    viewer.updateAnswer(String.valueOf(otvet));
-                    answer = String.valueOf(otvet);
+                    viewer.updateAnswer("=" + otvet);
                 }else {
                     viewer.update(String.valueOf(otvet));
                     temp = String.valueOf(otvet);
                 }
             }else {
                 if(isAnswer) {
-                    viewer.updateAnswer(String.valueOf(doubleToInt));
-                    answer = String.valueOf(doubleToInt);
+                    viewer.updateAnswer("=" + doubleToInt);
                 }else {
                     viewer.update(String.valueOf(doubleToInt));
                     temp = String.valueOf(doubleToInt);
                 }
             }
         }
+    }
+
+    private boolean isDouble(int answer, double doubleAnswer){
+        double check1 = Math.max(answer, doubleAnswer);
+        double check2 = Math.min(answer, doubleAnswer);
+        if(check1 > check2){
+            return true;
+        }
+        return false;
     }
 }
