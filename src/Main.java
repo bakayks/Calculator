@@ -3,7 +3,7 @@ public class Main{
 //        Viewer viewer = new Viewer();
         PolishNotation polishNotation = new PolishNotation();
         String otvet = polishNotation.infixToPostfix("5*(-5*3)-3");
-        polishNotation.calculate(otvet);
+        polishNotation.calculate("-3 5 * 3 -");
     }
 
 }

@@ -42,6 +42,7 @@ public class PolishNotation {
                     while (stack.size()>0 && stack.peek() != '(') {
                         postfix += " ";
                         postfix += stack.pop();
+                        postfix += " ";
                     }
                     stack.pop();
                     break;
@@ -50,6 +51,7 @@ public class PolishNotation {
                     while (stack.size()>0 && getPrioritet(value) <= getPrioritet(stack.peek())) {
                         postfix += " ";
                         postfix += stack.pop();
+                        postfix += " ";
                     }
                     stack.push(value);
                     break;

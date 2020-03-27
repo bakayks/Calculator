@@ -97,10 +97,10 @@ public class Viewer {
         buttonMultiplication.addActionListener(controller);
         buttonMultiplication.setActionCommand("Mult");
 
-        JButton buttonPercent = new JButton("%");
-        buttonPercent.setBounds(290, 170, 50, 50);
-        buttonPercent.addActionListener(controller);
-        buttonPercent.setActionCommand("Percent");
+        JButton buttonPlus = new JButton("+");
+        buttonPlus.setBounds(290, 170, 50, 50);
+        buttonPlus.addActionListener(controller);
+        buttonPlus.setActionCommand("Plus");
 
         JButton buttonOne = new JButton("1");
         buttonOne.setBounds(50, 230, 50, 50);
@@ -121,20 +121,15 @@ public class Viewer {
         buttonThree.setActionCommand("Three");
 
         JButton buttonZero = new JButton("0");
-        buttonZero.setBounds(50, 290, 50, 50);
+        buttonZero.setBounds(50, 290, 110, 50);
         buttonZero.setForeground(java.awt.Color.magenta);
         buttonZero.addActionListener(controller);
         buttonZero.setActionCommand("Zero");
 
         JButton buttonComma = new JButton(",");
-        buttonComma.setBounds(110, 290, 50, 50);
+        buttonComma.setBounds(170, 290, 50, 50);
         buttonComma.addActionListener(controller);
         buttonComma.setActionCommand("Comma");
-
-        JButton buttonPlus = new JButton("+");
-        buttonPlus.setBounds(170, 290, 50, 50);
-        buttonPlus.addActionListener(controller);
-        buttonPlus.setActionCommand("Plus");
 
         JButton buttonMinus = new JButton("-");
         buttonMinus.setBounds(230, 230, 50, 50);
@@ -172,7 +167,6 @@ public class Viewer {
         panel.add(buttonFive);
         panel.add(buttonSix);
         panel.add(buttonMultiplication);
-        panel.add(buttonPercent);
 
         panel.add(buttonOne);
         panel.add(buttonTwo);

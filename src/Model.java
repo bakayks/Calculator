@@ -108,6 +108,7 @@ public class Model {
             if(Character.isDigit(value)){
                 temp += value;
                 viewer.update(temp);
+                return;
             }else if((value == '/' || value == '*' || value == '+' || value == '-' || value == '(' || value == ')')) {
                 if (Character.isDigit(temp.charAt(temp.length() - 1))) {
                     if(value == '('){
@@ -134,8 +135,11 @@ public class Model {
                     temp += value;
                     viewer.update(temp);
                 }
+                return;
             }
         }
+        temp += value;
+        viewer.update(temp);
     }
 
     private void deleteLastTempSymbol(){
