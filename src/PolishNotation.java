@@ -4,27 +4,17 @@ import java.util.Stack;
 public class PolishNotation {
 
     public String infixToPostfix(String inFix){
-        System.out.println("Infix: "+inFix);
         String postfix = "";
         Stack<Character> stack = new Stack<>();
         for(int i = 0; i < inFix.length(); i++){
             char value = inFix.charAt(i);
-            breakPoint:if(value == '-' &&  inFix.length() > 1){
-                if(inFix.charAt(i-1) == ')'){
-                    postfix += " ";
-                }
-                if(inFix.charAt(0) == '-'){
-                    postfix += value;
-                    i++;
-                    value = inFix.charAt(i);
-                    break breakPoint;
-                }else if(!Character.isDigit(inFix.charAt(i-1))){
-                    postfix += value;
-                    value = inFix.charAt(i-1);
-                }
-            }
             switch (getPrioritet(value)){
                 case 0:
+                    if(i>2 && !Character.isDigit(inFix.charAt(i-1))){
+                        if(inFix.charAt(i-2) == '('){
+                            postfix += stack.pop();
+                        }
+                    }
                     for (int x = i; x < inFix.length(); x++) {
                         char symbol = inFix.charAt(x);
                         if(getPrioritet(symbol) == 0) {
